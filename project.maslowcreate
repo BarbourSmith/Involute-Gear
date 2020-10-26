@@ -8,6 +8,15 @@
     "topLevel": true,
     "allAtoms": [
         {
+            "atomType": "Code",
+            "name": "Code",
+            "x": 0.30600292825768666,
+            "y": 0.4444444444444444,
+            "uniqueID": 644051,
+            "ioValues": [],
+            "code": "//You can learn more about all of the available methods at https://jsxcad.js.org/app/UserGuide.html \n\n\nfunction main(Input1, Input2){\n  return involuteGear(10,15,20,0,5)\n}\n\nreturn main(Input1, Input2)\n\nfunction involuteGear(numTeeth, circularPitch, pressureAngle, clearance, thickness){\n    return sphere({radius: 150})\n}"
+        },
+        {
             "atomType": "Output",
             "name": "Output",
             "x": 0.9853587115666179,
@@ -15,7 +24,14 @@
             "ioValues": []
         }
     ],
-    "allConnectors": [],
+    "allConnectors": [
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "number or geometry",
+            "ap2Primary": false,
+            "ap1ID": 644051
+        }
+    ],
     "fileTypeVersion": 1,
     "filetypeVersion": 1,
     "circleSegmentSize": 2
