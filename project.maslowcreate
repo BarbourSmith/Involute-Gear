@@ -66,23 +66,6 @@
             "ioValues": []
         },
         {
-            "atomType": "Extrude",
-            "name": "Extrude",
-            "x": 0.6009569377990431,
-            "y": 0.6206896551724138,
-            "uniqueID": 247534,
-            "ioValues": [
-                {
-                    "name": "geometry",
-                    "ioValue": ""
-                },
-                {
-                    "name": "height",
-                    "ioValue": 10
-                }
-            ]
-        },
-        {
             "atomType": "Output",
             "name": "Output",
             "x": 0.9853587115666179,
@@ -118,7 +101,6 @@
             "ap2Primary": false,
             "ap1ID": 644051
         },
-        null,
         {
             "ap1Name": "number or geometry",
             "ap2Name": "clearance",
