@@ -18,7 +18,7 @@
             "ioValue": 10
         },
         {
-            "name": "Input567186",
+            "name": "Clearence",
             "ioValue": 10
         }
     ],
@@ -59,7 +59,7 @@
         },
         {
             "atomType": "Input",
-            "name": "Input567186",
+            "name": "Clearence",
             "x": 0.013333333333333334,
             "y": 0.7969348659003832,
             "uniqueID": 352264,
