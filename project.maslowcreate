@@ -23,7 +23,7 @@
         },
         {
             "name": "Thickness",
-            "ioValue": 10
+            "ioValue": 5
         }
     ],
     "topLevel": true,
