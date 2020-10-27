@@ -18,7 +18,7 @@
             "ioValue": 20
         },
         {
-            "name": "Clarence",
+            "name": "Clearance",
             "ioValue": 0
         },
         {
@@ -63,9 +63,9 @@
         },
         {
             "atomType": "Input",
-            "name": "Clarence",
+            "name": "Clearance",
             "x": 0.013333333333333334,
-            "y": 0.6360153256704981,
+            "y": 0.5977011494252873,
             "uniqueID": 352264,
             "ioValues": []
         },
