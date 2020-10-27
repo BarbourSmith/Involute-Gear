@@ -32,7 +32,7 @@
             "atomType": "Input",
             "name": "Number Of Teeth",
             "x": 0.013333333333333334,
-            "y": 0.27586206896551724,
+            "y": 0.19540229885057472,
             "uniqueID": 413161,
             "ioValues": []
         },
@@ -40,8 +40,16 @@
             "atomType": "Input",
             "name": "Circular Pitch",
             "x": 0.013333333333333334,
-            "y": 0.4674329501915709,
+            "y": 0.32567049808429116,
             "uniqueID": 853939,
+            "ioValues": []
+        },
+        {
+            "atomType": "Input",
+            "name": "Pressure Angle",
+            "x": 0.013333333333333334,
+            "y": 0.5210727969348659,
+            "uniqueID": 791030,
             "ioValues": []
         },
         {
@@ -55,17 +63,9 @@
         },
         {
             "atomType": "Input",
-            "name": "Pressure Angle",
-            "x": 0.013333333333333334,
-            "y": 0.6704980842911877,
-            "uniqueID": 791030,
-            "ioValues": []
-        },
-        {
-            "atomType": "Input",
             "name": "Clarence",
             "x": 0.013333333333333334,
-            "y": 0.7969348659003832,
+            "y": 0.6360153256704981,
             "uniqueID": 352264,
             "ioValues": []
         },
@@ -73,7 +73,7 @@
             "atomType": "Input",
             "name": "Thickness",
             "x": 0.013333333333333334,
-            "y": 0.9042145593869733,
+            "y": 0.7662835249042146,
             "uniqueID": 177750,
             "ioValues": []
         },
@@ -101,17 +101,17 @@
             "ap2ID": 644051
         },
         {
-            "ap1Name": "geometry",
-            "ap2Name": "number or geometry",
-            "ap2Primary": false,
-            "ap1ID": 644051
-        },
-        {
             "ap1Name": "number or geometry",
             "ap2Name": "pressureAngle",
             "ap2Primary": false,
             "ap1ID": 791030,
             "ap2ID": 644051
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "number or geometry",
+            "ap2Primary": false,
+            "ap1ID": 644051
         },
         {
             "ap1Name": "number or geometry",
