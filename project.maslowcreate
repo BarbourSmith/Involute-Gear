@@ -20,10 +20,6 @@
         {
             "name": "Clearance",
             "ioValue": 0
-        },
-        {
-            "name": "Thickness",
-            "ioValue": 5
         }
     ],
     "topLevel": true,
@@ -56,7 +52,7 @@
             "atomType": "Code",
             "name": "Code",
             "x": 0.4822966507177033,
-            "y": 0.3448275862068966,
+            "y": 0.3486590038314176,
             "uniqueID": 644051,
             "ioValues": [],
             "code": "//Ported from https://risacher.org/OpenJsCad/gearsdemo.html\n\n\nfunction main(numTeeth, circularPitch, pressureAngle, clearance, thickness){\n  \n  console.log(\"Number of teeth: \")\n  console.log(numTeeth)\n  \n  return involuteGear(numTeeth, circularPitch, pressureAngle, 0, 5)\n}\n\nreturn main(numTeeth, circularPitch, pressureAngle, clearance, thickness)\n\nfunction involuteGear(numTeeth, circularPitch, pressureAngle, clearance, thickness){\n    \n  // default values:\n  if(arguments.length < 3) pressureAngle = 20;\n  if(arguments.length < 4) clearance = 0;\n  if(arguments.length < 4) thickness = 1;\n  \n  var addendum = circularPitch / Math.PI;\n  var dedendum = addendum + clearance;\n  \n  // radiuses of the 4 circles:\n  var pitchRadius = numTeeth * circularPitch / (2 * Math.PI);\n  var baseRadius = pitchRadius * Math.cos(Math.PI * pressureAngle / 180);\n  var outerRadius = pitchRadius + addendum;\n  var rootRadius = pitchRadius - dedendum; \n\n  var maxtanlength = Math.sqrt(outerRadius*outerRadius - baseRadius*baseRadius);\n  var maxangle = maxtanlength / baseRadius;\n\n  var tl_at_pitchcircle = Math.sqrt(pitchRadius*pitchRadius - baseRadius*baseRadius);\n  var angle_at_pitchcircle = tl_at_pitchcircle / baseRadius;\n  var diffangle = angle_at_pitchcircle - Math.atan(angle_at_pitchcircle);\n  var angularToothWidthAtBase = Math.PI / numTeeth + 2*diffangle;\n  \n  // build a single 2d tooth in the 'points' array:\n  var resolution = 10;\n  var points = [vec2.create(0,0)];\n  for(var i = 0; i <= resolution; i++)\n  {\n    // first side of the tooth:\n    var angle = maxangle * i / resolution;\n    var tanlength = angle * baseRadius;\n    var radvector = vec2.fromAngleRadians(angle);\n    var tanvector = vec2.scale(-1,vec2.normal(radvector));\n    \n    var p = vec2.add(vec2.scale(baseRadius, radvector), vec2.scale(tanlength,tanvector));\n    \n    points[i+1] = p;\n    \n    // opposite side of the tooth:\n    radvector = vec2.fromAngleRadians(angularToothWidthAtBase - angle);    \n    tanvector = vec2.normal(radvector);\n    \n    p = vec2.add(vec2.scale(baseRadius, radvector), vec2.scale(tanlength, tanvector));\n    points[2 * resolution + 2 - i] = p;\n  }\n  \n  // create the polygon and extrude into 3D:\n    \n    var tooth3d = geom2.fromPoints(points)\n    \n     var allteeth = []\n     for(var i = 0; i < numTeeth; i++){\n        var angle = Math.PI*(i*360/numTeeth)/180;\n        var rotatedtooth = rotate([0,0,angle],tooth3d);\n        allteeth.push(rotatedtooth);\n     }\n     \n     allteeth = union(allteeth)\n     \n       // build the root circle:  \n     points = [];\n     var toothAngle = 2 * Math.PI / numTeeth;\n     var toothCenterAngle = 0.5 * angularToothWidthAtBase; \n     for(var i = 0; i < numTeeth; i++){\n        var angle = toothCenterAngle + i * toothAngle;\n        var p = vec2.scale(rootRadius, vec2.fromAngleRadians(angle));\n        points.push(p);\n     }\n\n     // create the polygon and extrude into 3D:\n     var rootcircle = geom2.fromPoints(points)\n    \n    return union(rootcircle, allteeth)\n}"
@@ -67,14 +63,6 @@
             "x": 0.013333333333333334,
             "y": 0.5977011494252873,
             "uniqueID": 352264,
-            "ioValues": []
-        },
-        {
-            "atomType": "Input",
-            "name": "Thickness",
-            "x": 0.013333333333333334,
-            "y": 0.7662835249042146,
-            "uniqueID": 177750,
             "ioValues": []
         },
         {
@@ -118,13 +106,6 @@
             "ap2Name": "clearance",
             "ap2Primary": false,
             "ap1ID": 352264,
-            "ap2ID": 644051
-        },
-        {
-            "ap1Name": "number or geometry",
-            "ap2Name": "thickness",
-            "ap2Primary": false,
-            "ap1ID": 177750,
             "ap2ID": 644051
         }
     ],
