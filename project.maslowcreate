@@ -11,10 +11,14 @@
         },
         {
             "name": "Circular Pitch",
+            "ioValue": 5
+        },
+        {
+            "name": "Pressure Angle",
             "ioValue": 10
         },
         {
-            "name": "Input129758",
+            "name": "Input567186",
             "ioValue": 10
         }
     ],
@@ -47,10 +51,18 @@
         },
         {
             "atomType": "Input",
-            "name": "Input129758",
+            "name": "Pressure Angle",
             "x": 0.013333333333333334,
             "y": 0.6704980842911877,
             "uniqueID": 791030,
+            "ioValues": []
+        },
+        {
+            "atomType": "Input",
+            "name": "Input567186",
+            "x": 0.013333333333333334,
+            "y": 0.7969348659003832,
+            "uniqueID": 352264,
             "ioValues": []
         },
         {
