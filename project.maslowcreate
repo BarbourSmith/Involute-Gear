@@ -18,7 +18,7 @@
             "ioValue": 10
         },
         {
-            "name": "Clearence",
+            "name": "Clarence",
             "ioValue": 10
         }
     ],
@@ -59,7 +59,7 @@
         },
         {
             "atomType": "Input",
-            "name": "Clearence",
+            "name": "Clarence",
             "x": 0.013333333333333334,
             "y": 0.7969348659003832,
             "uniqueID": 352264,
@@ -93,7 +93,8 @@
             "ap2Name": "number or geometry",
             "ap2Primary": false,
             "ap1ID": 644051
-        }
+        },
+        null
     ],
     "fileTypeVersion": 1,
     "filetypeVersion": 1,
