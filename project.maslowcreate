@@ -7,7 +7,7 @@
     "ioValues": [
         {
             "name": "Number Of Teeth",
-            "ioValue": 45
+            "ioValue": 15
         },
         {
             "name": "Circular Pitch",
@@ -51,13 +51,13 @@
         {
             "atomType": "Code",
             "name": "Code",
-            "x": 0.41468253968253965,
-            "y": 0.34294871794871795,
-            "uniqueID": 644051,
+            "x": 0.37595258255715497,
+            "y": 0.3138461538461539,
+            "uniqueID": 990375,
             "ioValues": [
                 {
                     "name": "numTeeth",
-                    "ioValue": 45
+                    "ioValue": 15
                 },
                 {
                     "name": "circularPitch",
@@ -72,7 +72,7 @@
                     "ioValue": 0
                 }
             ],
-            "code": "//You can learn more about all of the available methods at https://jsxcad.js.org/app/UserGuide.html \n//Inputs:[numTeeth, circularPitch, pressureAngle, clearance];\n\nfunction main(numTeeth, circularPitch, pressureAngle, clearance){\n  \n  const example = GearProfile(numTeeth, { mmPerTooth:circularPitch,\n    pressureAngle:pressureAngle,\n    clearance: clearance});\n  \n  return example\n}\n\n// Probably derived from https://github.com/sadr0b0t/pd-gears/blob/master/pd-gears.scad\n// Public Domain Parametric Involute Spur Gear (and involute helical gear and involute rack)\n// version 1.1 by Leemon Baird, 2011, Leemon@Leemon.com\n\n// convert polar to cartesian coordinates\nconst polar = (r, theta) => [r * sin(theta), r * cos(theta)];\n\n// point at radius d on the involute curve\nconst q6 = (b, s, t, d) => polar(d, s * (iang(b, d) + t));\n\n// radius a fraction f up the curved side of the tooth\nconst q7 = (f, r, b, r2, t, s) => q6(b, s, t, (1 - f) * max(b, r) + f * r2);\n\n// unwind a string this many degrees to go from radius r1 to radius r2\nconst iang = (r1, r2) =>\n  (sqrt((r2 / r1) * (r2 / r1) - 1) / Math.PI) * 180 - acos(r1 / r2);\n\nconst ToothProfile = ({ r, b, c, k, numberOfTeeth }) => {\n  const path = [\n    polar(r, -k),\n    q7(0 / 5, r, b, c, k, -1),\n    q7(1 / 5, r, b, c, k, -1),\n    q7(2 / 5, r, b, c, k, -1),\n    q7(3 / 5, r, b, c, k, -1),\n    q7(4 / 5, r, b, c, k, -1),\n    q7(5 / 5, r, b, c, k, -1),\n    q7(5 / 5, r, b, c, k, 1),\n    q7(4 / 5, r, b, c, k, 1),\n    q7(3 / 5, r, b, c, k, 1),\n    q7(2 / 5, r, b, c, k, 1),\n    q7(1 / 5, r, b, c, k, 1),\n    q7(0 / 5, r, b, c, k, 1),\n  ];\n\n  if (r < b) {\n    path.push(polar(r, k));\n  }\n\n  return Shape.fromOpenPath(path);\n};\n\nconst pitchRadius = (mmPerTooth = Math.PI, numberOfTeeth = 16) =>\n  (mmPerTooth * numberOfTeeth) / Math.PI / 2;\n\nconst outerRadius = (\n  mmPerTooth = Math.PI,\n  numberOfTeeth = 16,\n  clearance = 0\n) => pitchRadius(mmPerTooth, numberOfTeeth) + mmPerTooth / Math.PI - clearance;\n\nconst baseRadius = (\n  mmPerTooth = Math.PI,\n  numberOfTeeth = 16,\n  pressureAngle = 20\n) => pitchRadius(mmPerTooth, numberOfTeeth) * cos(pressureAngle);\n\nconst rootRadius = (\n  mmPerTooth = Math.PI,\n  numberOfTeeth = 16,\n  clearance = 0\n) => {\n  const p = pitchRadius(mmPerTooth, numberOfTeeth);\n  const c = outerRadius(mmPerTooth, numberOfTeeth);\n  return p - (c - p) - clearance;\n};\n\nconst GearProfile = (\n  numberOfTeeth = 16,\n  {\n    mmPerTooth = Math.PI,\n    teethToHide = 0,\n    pressureAngle = 20,\n    clearance = 0,\n    backlash = 0,\n  } = {}\n) => {\n  const pi = Math.PI;\n  // const p = mmPerTooth * numberOfTeeth / pi / 2; // radius of pitch circle\n  const p = pitchRadius(mmPerTooth, numberOfTeeth);\n  const c = outerRadius(mmPerTooth, numberOfTeeth, clearance);\n  const b = baseRadius(mmPerTooth, numberOfTeeth, pressureAngle);\n  const r = rootRadius(mmPerTooth, numberOfTeeth, clearance);\n  const t = mmPerTooth / 2 - backlash / 2;\n  \n  console.log(p);\n\n  // angle to where involute meets base circle on each side of tooth\n  const k = -iang(b, p) - (t / 2 / p / pi) * 180;\n\n  const toothProfile = ToothProfile({ r, b, c, k, numberOfTeeth });\n\n  let profile = Shape.fromOpenPath([]);\n  for (let i = 0; i < numberOfTeeth - teethToHide; i++) {\n    profile = profile.concat(toothProfile.rotateZ((-i ) / numberOfTeeth));\n  }\n\n  return profile.close().fill();\n};\n\n\nreturn main(numTeeth, circularPitch, pressureAngle, clearance)\n"
+            "code": "//You can learn more about all of the available methods at https://jsxcad.js.org/app/UserGuide.html \n//Inputs:[numTeeth, circularPitch, pressureAngle, clearance];\n\n// Probably derived from https://github.com/sadr0b0t/pd-gears/blob/master/pd-gears.scad\n// Public Domain Parametric Involute Spur Gear (and involute helical gear and involute rack)\n// version 1.1 by Leemon Baird, 2011, Leemon@Leemon.com\n\n// convert polar to cartesian coordinates\nconst polar = (radius, theta) => [radius * sin(theta), radius * cos(theta)];\n\n// point at radius d on the involute curve\nconst q6 = (baseCircle, side, angle, pitchRadius) =>\n  polar(pitchRadius, side * (iang(baseCircle, pitchRadius) + angle));\n\n// radius a fraction f up the curved side of the tooth\nconst q7 = (fraction, rootRadius, baseRadius, outerRadius, angle, side) =>\n  q6(\n    baseRadius,\n    side,\n    angle,\n    (1 - fraction) * max(baseRadius, rootRadius) + fraction * outerRadius\n  );\n\n// unwind a string this many degrees to go from radius r1 to radius r2\nconst iang = (baseRadius, pitchRadius) =>\n  (sqrt((pitchRadius / baseRadius) * (pitchRadius / baseRadius) - 1) /\n    Math.PI) *\n    180 -\n  acos(baseRadius / pitchRadius);\n\nconst ToothProfile = (\n  rootRadius = 7,\n  baseRadius = 7.517540966287267,\n  outerRadius = 9,\n  angle = -6.478958291841238,\n  resolution = 5\n) => {\n  const path = [polar(rootRadius, -angle)];\n  for (let i = 0; i <= resolution; i++) {\n    path.push(\n      q7(i / resolution, rootRadius, baseRadius, outerRadius, angle, -1)\n    );\n  }\n  for (let i = resolution; i >= 0; i--) {\n    path.push(\n      q7(i / resolution, rootRadius, baseRadius, outerRadius, angle, 1)\n    );\n  }\n  if (rootRadius < baseRadius) {\n    path.push(polar(rootRadius, angle));\n  }\n\n  return Shape.fromOpenPath(path);\n};\n\nconst pitchRadius = (mmPerTooth = Math.PI, numberOfTeeth = 16) =>\n  (mmPerTooth * numberOfTeeth) / Math.PI / 2;\n\nconst outerRadius = (mmPerTooth = Math.PI, numberOfTeeth = 16, clearance = 0) =>\n  pitchRadius(mmPerTooth, numberOfTeeth) + mmPerTooth / Math.PI - clearance;\n\nconst baseRadius = (\n  mmPerTooth = Math.PI,\n  numberOfTeeth = 16,\n  pressureAngle = 20\n) => pitchRadius(mmPerTooth, numberOfTeeth) * cos(pressureAngle);\n\nconst rootRadius = (\n  mmPerTooth = Math.PI,\n  numberOfTeeth = 16,\n  clearance = 0\n) => {\n  const p = pitchRadius(mmPerTooth, numberOfTeeth);\n  const c = outerRadius(mmPerTooth, numberOfTeeth);\n  return p - (c - p) - clearance;\n};\n\nShape.registerMethod(\n  'hasTeeth',\n  (gearTeeth) => (s) => s.updatePlan({ gearTeeth })\n);\n\nShape.registerMethod(\n  'hasMmPerTooth',\n  (gearMmPerTooth) => (s) => s.updatePlan({ gearMmPerTooth })\n);\n\nShape.registerMethod(\n  'hasHiddenTeeth',\n  (gearHiddenTeeth) => (s) => s.updatePlan({ gearHiddenTeeth })\n);\n\nShape.registerMethod(\n  'hasPressureAngle',\n  (gearPressureAngle) => (s) => s.updatePlan({ gearPressureAngle })\n);\n\nShape.registerMethod(\n  'hasClearance',\n  (gearClearance) => (s) => s.updatePlan({ gearClearance })\n);\n\nShape.registerMethod(\n  'hasBacklash',\n  (gearBacklash) => (s) => s.updatePlan({ gearBacklash })\n);\n\nShape.registerMethod(\n  'hasToothResolution',\n  (gearToothResolution) => (s) => s.updatePlan({ gearToothResolution })\n);\n\nShape.registerReifier('Gear', (plan) => {\n  const pi = Math.PI;\n\n  const numberOfTeeth = ofPlan(plan, 'gearTeeth', 16);\n  const mmPerTooth = ofPlan(plan, 'gearMmPerTooth', pi);\n  const teethToHide = ofPlan(plan, 'gearTeethToHide', 0);\n  const pressureAngle = ofPlan(plan, 'gearPressureAngle', 20);\n  const clearance = ofPlan(plan, 'gearClearance', 0);\n  const backlash = ofPlan(plan, 'gearBacklash', 0);\n  const toothResolution = ofPlan(plan, 'gearToothResolution', 5);\n  // const p = mmPerTooth * numberOfTeeth / pi / 2; // radius of pitch circle\n  const p = pitchRadius(mmPerTooth, numberOfTeeth);\n  const c = outerRadius(mmPerTooth, numberOfTeeth, clearance);\n  const b = baseRadius(mmPerTooth, numberOfTeeth, pressureAngle);\n  const r = rootRadius(mmPerTooth, numberOfTeeth, clearance);\n  const t = mmPerTooth / 2 - backlash / 2;\n\n  // angle to where involute meets base circle on each side of tooth\n  const k = -iang(b, p) - (t / 2 / p / pi) * 180;\n\n  const toothProfile = ToothProfile(r, b, c, k, toothResolution);\n\n  return toothProfile\n    .seq(\n      { upto: numberOfTeeth - teethToHide },\n      (i) => rz(-i / numberOfTeeth),\n      Group\n    )\n    .loop();\n});\n\nconst Gear = () => Plan('Gear');\n\nreturn Gear()\n  .hasTeeth(numTeeth)\n  .hasMmPerTooth(circularPitch)\n  .hasPressureAngle(pressureAngle)\n  .hasClearance(clearance)\n  .fill()\n"
         },
         {
             "atomType": "Input",
@@ -83,15 +83,6 @@
             "ioValues": []
         },
         {
-            "atomType": "Code",
-            "name": "Code",
-            "x": 0.4041005291005291,
-            "y": 0.7243589743589745,
-            "uniqueID": 451751,
-            "ioValues": [],
-            "code": "//You can learn more about all of the available methods at https://jsxcad.js.org/app/UserGuide.html \n//Inputs:[Input1, Input2];\n\n\nreturn Orb(10)"
-        },
-        {
             "atomType": "Output",
             "name": "Output",
             "x": 0.9853587115666179,
@@ -100,7 +91,7 @@
             "ioValues": [
                 {
                     "name": "number or geometry",
-                    "ioValue": "atoms/623227/644051Code"
+                    "ioValue": "source/623227/990375Code"
                 }
             ]
         }
@@ -111,27 +102,27 @@
             "ap2Name": "numTeeth",
             "ap2Primary": false,
             "ap1ID": 413161,
-            "ap2ID": 644051
+            "ap2ID": 990375
         },
         {
             "ap1Name": "number or geometry",
             "ap2Name": "circularPitch",
             "ap2Primary": false,
             "ap1ID": 853939,
-            "ap2ID": 644051
+            "ap2ID": 990375
         },
         {
             "ap1Name": "number or geometry",
             "ap2Name": "pressureAngle",
             "ap2Primary": false,
             "ap1ID": 791030,
-            "ap2ID": 644051
+            "ap2ID": 990375
         },
         {
             "ap1Name": "geometry",
             "ap2Name": "number or geometry",
             "ap2Primary": false,
-            "ap1ID": 644051,
+            "ap1ID": 990375,
             "ap2ID": 120219
         },
         {
@@ -139,7 +130,7 @@
             "ap2Name": "clearance",
             "ap2Primary": false,
             "ap1ID": 352264,
-            "ap2ID": 644051
+            "ap2ID": 990375
         }
     ],
     "fileTypeVersion": 1,
